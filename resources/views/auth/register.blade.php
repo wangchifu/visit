@@ -65,6 +65,20 @@
                     @include('layouts.vendor_basic_form')
 
                     <div class="form-group">
+                        <div class="col-md-4 text-md-left">
+                        </div>
+                        <div class="col-md-6 text-md-left">
+                            <a href="{{ route('login') }}"><img src="{{ route('pic') }}" class="img-fluid"></a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="chaptcha" class="col-md-4 control-label"><strong class="text-danger">驗證碼*</strong></label>
+                        <div class="col-md-6 col-md-offset-4">
+                            <input tabindex="3" id="password" type="text" class="form-control" name="chaptcha" required placeholder="請將上圖國字轉阿拉伯數字" maxlength="5">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <div class="col-md-6 col-md-offset-4">
                             <button type="submit" class="btn btn-primary" onclick="return confirm('確定？')">
                                 <i class="fas fa-share-square"></i> 送出申請

@@ -14,7 +14,9 @@
 //Route::get('/', function () { return view('index'); })->name('index');
 
 Route::get('/', 'PostController@index')->name('index');
-Route::get('/map', function () { return view('map'); })->name('map');
+Route::get('/map', function () {
+    return view('map');
+})->name('map');
 
 //Auth::routes();
 //管理及廠商登入
@@ -22,6 +24,8 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('register', 'Auth\LoginController@register')->name('register');
 Route::post('do_register', 'Auth\LoginController@do_register')->name('do.register');
+
+Route::get('pic', 'HomeController@pic')->name('pic');
 
 //登出
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
@@ -73,26 +77,25 @@ Route::get('experiences/{experience}/guest_show', 'ExperienceController@guest_sh
 //公告系統
 //公告系統
 //Route::get('posts' , 'PostController@index')->name('posts.index');
-Route::get('posts/{post}' , 'PostController@show')->where('post', '[0-9]+')->name('posts.show');
+Route::get('posts/{post}', 'PostController@show')->where('post', '[0-9]+')->name('posts.show');
 //Route::post('posts/search' , 'PostController@search')->name('posts.search');
 //Route::get('posts/{job_title}/job_title' , 'PostController@job_title')->name('posts.job_title');
 
 
 
 //有註冊的才能進入
-Route::group(['middleware' => 'auth'],function() {
-//管理後台
+Route::group(['middleware' => 'auth'], function () {
+    //管理後台
     Route::get('back', 'HomeController@back')->name('back.index');
 
     Route::get('users/info', 'UsersController@info')->name('users.info');
     Route::post('users/info_update', 'UsersController@info_update')->name('users.info_update');
 
     Route::get('sims/impersonate_leave', 'SimulationController@impersonate_leave')->name('sims.impersonate_leave');
-
 });
 
 //管理員權限才能進入
-Route::group(['middleware' => 'admin'],function() {
+Route::group(['middleware' => 'admin'], function () {
     Route::get('users/index', 'UsersController@index')->name('users.index');
     Route::get('users/wait', 'UsersController@wait')->name('users.wait');
     Route::get('users/add_user', 'UsersController@add_user')->name('users.add_user');
@@ -103,7 +106,7 @@ Route::group(['middleware' => 'admin'],function() {
     Route::get('users/{user}/apply/{page}', 'UsersController@apply')->name('users.apply');
     Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
     Route::post('users/{user}/admin_update', 'UsersController@admin_update')->name('users.admin_update');
-    
+
     Route::get('users/{user}/destroy', 'UsersController@destroy')->name('users.destroy');
 
     //廠商行程審核
@@ -132,13 +135,13 @@ Route::group(['middleware' => 'admin'],function() {
 
 
     # 公告系統
-    Route::get('posts/create' , 'PostController@create')->name('posts.create');
-    Route::post('posts' , 'PostController@store')->name('posts.store');
-    Route::get('posts/{post}/edit' , 'PostController@edit')->name('posts.edit');
-    Route::patch('posts/{post}' , 'PostController@update')->name('posts.update');
+    Route::get('posts/create', 'PostController@create')->name('posts.create');
+    Route::post('posts', 'PostController@store')->name('posts.store');
+    Route::get('posts/{post}/edit', 'PostController@edit')->name('posts.edit');
+    Route::patch('posts/{post}', 'PostController@update')->name('posts.update');
     Route::delete('posts/{post}', 'PostController@destroy')->name('posts.destroy');
     //刪檔案
-    Route::get('posts/{file}/fileDel' , 'PostController@fileDel')->name('posts.fileDel');
+    Route::get('posts/{file}/fileDel', 'PostController@fileDel')->name('posts.fileDel');
 
     //查看全部心得
     Route::get('experience_all', 'ExperienceController@all')->name('experience_all');
@@ -146,18 +149,16 @@ Route::group(['middleware' => 'admin'],function() {
     Route::get('experience_admin_destroy/{experience}', 'ExperienceController@admin_destroy')->name('admin_destroy');
 
     Route::get('sims/{user}/impersonate', 'SimulationController@impersonate')->name('sims.impersonate');
-
-
 });
 
 //國中小才能進入
-Route::group(['middleware' => 'school'],function() {
+Route::group(['middleware' => 'school'], function () {
 
     //參訪行程媒合
-    Route::get('matchmaking/school' , 'MatchmakingsController@school')->name('matchmaking.school');
+    Route::get('matchmaking/school', 'MatchmakingsController@school')->name('matchmaking.school');
 
-    Route::get('matchmaking/{visit}/visit_data' , 'MatchmakingsController@visit_data')->name('matchmaking.visit_data');
-    Route::post('matchmaking/store' , 'MatchmakingsController@store')->name('matchmaking.store');
+    Route::get('matchmaking/{visit}/visit_data', 'MatchmakingsController@visit_data')->name('matchmaking.visit_data');
+    Route::post('matchmaking/store', 'MatchmakingsController@store')->name('matchmaking.store');
 
     //顯示我的參訪
     Route::get('visits/my_visit', 'VisitsController@my_visit')->name('visits.my_visit');
@@ -185,12 +186,10 @@ Route::group(['middleware' => 'school'],function() {
     Route::post('experience/store', 'ExperienceController@store')->name('experiences.store');
     Route::post('experience/{experience}/update', 'ExperienceController@update')->name('experiences.update');
     Route::get('experience/{experience}/destroy', 'ExperienceController@destroy')->name('experiences.destroy');
-
-
 });
 
 //技藝班，只限高中職進入
-Route::group(['middleware' => 'skill'],function() {
+Route::group(['middleware' => 'skill'], function () {
     Route::get('skills/high_school', 'SkillsController@high_school')->name('skills.high_school');
     Route::get('skills/high_school_show_co', 'SkillsController@high_school_show_co')->name('skills.high_school_show_co');
     Route::get('skills/{reback_skill}/high_school_ok', 'SkillsController@high_school_ok')->name('skills.high_school_ok');
@@ -201,7 +200,7 @@ Route::group(['middleware' => 'skill'],function() {
 
 
 //高中職或公司企業或職場達人才能進入
-Route::group(['middleware' => 'vendor'],function() {
+Route::group(['middleware' => 'vendor'], function () {
     Route::get('vendor_data/show', 'VendorDataController@show')->name('vendor_datas.show');
     Route::patch('vendor_data/{user}/update', 'VendorDataController@update')->name('vendor_datas.update');
 
@@ -213,7 +212,7 @@ Route::group(['middleware' => 'vendor'],function() {
     Route::get('visits/{visit}/edit', 'VisitsController@edit')->name('visits.edit');
     Route::patch('visits/{visit}/update', 'VisitsController@update')->name('visits.update');
     Route::delete('visits/{visit}/destroy', 'VisitsController@destroy')->name('visits.destroy');
-    Route::get('visits/{visit_id}/file_del/{file}' , 'VisitsController@file_delete')->name('visits.file_delete');
+    Route::get('visits/{visit_id}/file_del/{file}', 'VisitsController@file_delete')->name('visits.file_delete');
 
     //行程媒合管理
     Route::get('visits/{visit}/matching', 'VisitsController@matching')->name('visits.matching');
@@ -221,15 +220,11 @@ Route::group(['middleware' => 'vendor'],function() {
     Route::get('visits/{matchmaking}/no_pass', 'VisitsController@no_pass')->name('visits.no_pass');
     Route::get('visits/{user}/{visit_id}/show_user', 'VisitsController@show_user')->name('visits.show_user');
     Route::get('visits/{matchmaking}/del', 'VisitsController@del')->name('visits.del');
-
-
-
-
 });
 
 
 //職探中心才能進入
-Route::group(['middleware' => 'ztan'],function() {
+Route::group(['middleware' => 'ztan'], function () {
     //課程設計
     Route::get('courses/index', 'CoursesController@index')->name('courses.index');
     Route::get('courses/create', 'CoursesController@create')->name('courses.create');
