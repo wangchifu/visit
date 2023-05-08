@@ -137,7 +137,11 @@ class SearchController extends Controller
             ->join('users','users.id','=','visits.user_id')
             ->where('users.group_id',$group_id)
             ->where('visits.disable',null)
-            ->where('visit_name','like','%'.$find.'%')
+            ->where(function ($q) use ($find){
+                $q->where('visits.visit_name','like','%'.$find.'%')
+                ->orWhere('visits.about','like','%'.$find.'%')
+                ->orWhere('users.name','like','%'.$find.'%');
+            })
             ->select('visits.*','vendor_datas.vendor_name as vendor_name','users.group_id')
             ->orderByDesc('views')
             ->orderByDesc('id')

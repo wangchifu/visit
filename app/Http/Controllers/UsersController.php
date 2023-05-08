@@ -71,6 +71,26 @@ class UsersController extends Controller
         return view('users.all_user',$data);
     }
 
+    public function search(Request $request)
+    {
+        $find = $request->input('find');
+        if(empty($find)){
+            $users = [];
+        }else{
+            $users = User::where('username','like','%'.$find.'%')
+            ->orWhere('name','like','%'.$find.'%')
+            ->get();
+        }
+        
+
+        $data = [
+            'find'=>$find,
+            'users'=>$users,
+        ];
+
+        return view('users.search',$data);
+    }
+
     public function store_add_user(Request $request)
     {
         User::create([
@@ -178,7 +198,12 @@ class UsersController extends Controller
 			$att2['user_id'] =$user_id;
 			$user->vendor_data->update($att2);
 		}
-        return redirect('users/index?page='.$page); 
+        if($page=="0"){
+            return redirect()->route('users.search');
+        }else{
+            return redirect('users/index?page='.$page); 
+        }
+        
     }
     /**
      * Remove the specified resource from storage.

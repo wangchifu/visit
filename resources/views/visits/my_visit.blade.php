@@ -53,7 +53,7 @@
                     </td>
                     <td>
                         @if($matchmaking->situation == "1")
-                            <strong class="text-warning">申請</strong>
+                            <strong class="text-warning">申請</strong> <a href="{{ route('matchmaking.destroy',$matchmaking->id) }}" onclick="return confirm('確定要取消申請嗎？')"><i class="fas fa-times-circle text-danger"></i></a>
                         @elseif($matchmaking->situation == "2")
                             <strong class="text-success">通過</strong>
                         @elseif($matchmaking->situation == "3")

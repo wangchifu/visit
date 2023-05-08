@@ -100,6 +100,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('users/wait', 'UsersController@wait')->name('users.wait');
     Route::get('users/add_user', 'UsersController@add_user')->name('users.add_user');
     Route::any('users/all_user', 'UsersController@all_user')->name('users.all_user');
+    Route::any('users/search', 'UsersController@search')->name('users.search');
     Route::post('users/store_add_user', 'UsersController@store_add_user')->name('users.store_add_user');
     Route::get('users/{user}/reset_pwd', 'UsersController@reset_pwd')->name('users.reset_pwd');
 
@@ -159,9 +160,11 @@ Route::group(['middleware' => 'school'], function () {
 
     Route::get('matchmaking/{visit}/visit_data', 'MatchmakingsController@visit_data')->name('matchmaking.visit_data');
     Route::post('matchmaking/store', 'MatchmakingsController@store')->name('matchmaking.store');
+    Route::get('matchmaking/{matchmaking}/destroy', 'MatchmakingsController@destroy')->name('matchmaking.destroy');
 
     //顯示我的參訪
     Route::get('visits/my_visit', 'VisitsController@my_visit')->name('visits.my_visit');
+    
 
 
     //報名職探中心課程

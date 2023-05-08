@@ -17,6 +17,7 @@
                 <a href="{{ route('users.wait') }}" class="btn btn-secondary"><i class="fas fa-question-circle"></i> 待審列表</a>
                 <a href="{{ route('users.add_user') }}" class="btn btn-success"><i class="fas fa-plus-circle"></i> 新增本機帳號</a>
                 <a href="{{ route('users.all_user') }}" class="btn btn-info disabled"><i class="fas fa-th-list"></i> 全部帳號</a>
+                <a href="{{ route('users.search') }}" class="btn btn-warning"><i class="fas fa-search"></i></i> 搜尋帳號</a>
             </div>
             {{ Form::open(['route' => 'users.all_user', 'method' => 'POST','id'=>'all_user']) }}
             <div class="form-group">
