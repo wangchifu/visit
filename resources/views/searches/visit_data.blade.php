@@ -18,16 +18,20 @@
             {{ Form::open(['route'=>'matchmaking.store','method'=>'post']) }}
                 <div class="form-group">
                     <label for="date">*參訪日期</label>
-                    <input type="text" class="form-control" id="date" name="visit_date" placeholder="{{ date('Y-m-d') }}" required maxlength="10">
+                    <input type="date" class="form-control" id="date" name="visit_date" placeholder="{{ date('Y/m/d') }}" required maxlength="10">
                     <small id="emailHelp" class="form-text text-muted">請依上列日期格式</small>
                 </div>
                 <div class="form-group">
-                    <label for="teachers">帶隊教職人數</label>
-                    <input type="text" class="form-control" id="teachers" name="teachers">
+                    <label for="teachers">*帶隊教職人數</label>
+                    <input type="text" class="form-control" id="teachers" name="teachers" required>
                 </div>
                 <div class="form-group">
-                    <label for="students">參訪學生人數</label>
-                    <input type="text" class="form-control" id="students" name="students">
+                    <label for="grade">*參訪學生年級</label>
+                    <input type="text" class="form-control" id="grade" name="grade" required>
+                </div>
+                <div class="form-group">
+                    <label for="students">*參訪學生人數</label>
+                    <input type="text" class="form-control" id="students" name="students" required>
                 </div>
                 <button type="submit" class="btn btn-primary" onclick="return confirm('送出後，就會自動電子信件聯絡對方，不得刪除，建議通過對方審查後，互相打電話聯繫相關事宜！')">確認送出</button>
                 <input type="hidden" name="visit_id" value="{{ $visit->id }}">

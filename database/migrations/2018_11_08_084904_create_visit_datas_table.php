@@ -19,6 +19,7 @@ class CreateVisitDatasTable extends Migration
             $table->unsignedInteger('matchmaking_id');
             $table->string('visit_date');//參訪日期
             $table->unsignedInteger('teachers')->nullable();//帶隊教師人數
+            $table->string('grade')->nullable();//參訪學生年級
             $table->unsignedInteger('students')->nullable();//參訪學生人數
             $table->timestamps();
         });

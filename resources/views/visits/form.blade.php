@@ -17,8 +17,26 @@
     </div>
 @else
     <div class="form-group">
+        <label for="visit_careers" class="control-label"><strong class="text-danger">相關類別及職群*</strong></label>
+        {{ Form::select('visit_careers',$visit_careers,null,['id'=>'visit_careers','class' => 'form-control','required'=>'required']) }}
+    </div>
+    <div class="form-group">
         <label for="about" class="control-label"><strong class="text-danger">課程簡介*</strong></label>
         {{ Form::textarea('about',null,['id'=>'about','class' => 'form-control',"rows"=>"3",'required'=>'required']) }}
+    </div>
+    <div class="form-group">
+        <label for="docx" class="control-label">上傳學習單(只能一個檔)</label>
+        @if(!empty($docx))
+            <?php $path = asset('storage/visits_docx').'/'.$visit->id.'/'.$docx[0]; ?>
+            <span class="text-danger">目前已上傳：</span><a href="{{ $path }}"><i class="fas fa-download"></i></a>
+            @if($user->group_id == "1")
+                <a href="{{ url('visits/'.$visit->id.'/'.$page.'/admin_docx_del/'.$docx[0]) }}" onclick="return confirm('確定刪除這個檔案？')"><i class="fas fa-times-circle text-danger"></i></a>
+            @else
+                <a href="{{ url('visits/'.$visit->id.'/docx_del/'.$docx[0]) }}" onclick="return confirm('確定刪除這個檔案？')"><i class="fas fa-times-circle text-danger"></i></a>
+            @endif
+            <br>
+        @endif
+        {{ Form::file('docx',['class' => 'form-control']) }}
     </div>
 @endif
 
@@ -45,7 +63,11 @@
                 ?>
                 <div style="float:left;padding: 10px;">
                     <img src="{{ url('img/'.$file) }}" width="100">
-                    <a href="{{ url('visits/'.$visit->id.'/file_del/'.$v) }}" onclick="return confirm('上面的更動應該先存檔喔！確定刪除這張照片？')"><i class="fas fa-times-circle text-danger"></i></a>
+                    @if($user->group_id == "1")
+                        <a href="{{ url('visits/'.$visit->id.'/'.$page.'/admin_file_del/'.$v) }}" onclick="return confirm('上面的更動應該先存檔喔！確定刪除這張照片？')"><i class="fas fa-times-circle text-danger"></i></a>
+                    @else
+                        <a href="{{ url('visits/'.$visit->id.'/file_del/'.$v) }}" onclick="return confirm('上面的更動應該先存檔喔！確定刪除這張照片？')"><i class="fas fa-times-circle text-danger"></i></a>
+                    @endif
                 </div>
             @endforeach
         </div>

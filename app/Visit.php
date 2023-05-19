@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Visit extends Model
 {
     protected $fillable = [
+        'visit_careers',        
         'visit_name',
         'about',
         'graduate',

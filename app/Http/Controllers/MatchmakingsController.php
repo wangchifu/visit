@@ -65,7 +65,7 @@ class MatchmakingsController extends Controller
 
 
     public function store(Request $request)
-    {
+    {        
         $att['situation'] = "1";
         $att['user_id'] = auth()->user()->id;
         $att['visit_id'] = $request->input('visit_id');
@@ -75,7 +75,9 @@ class MatchmakingsController extends Controller
         $att2['matchmaking_id'] = $matchmaking->id;
         $att2['visit_date'] = $request->input('visit_date');
         $att2['teachers'] = $request->input('teachers');
+        $att2['grade'] = $request->input('grade');
         $att2['students'] = $request->input('students');
+    
         VisitData::create($att2);
 
         $visit = Visit::where('id',$att['visit_id'])->first();

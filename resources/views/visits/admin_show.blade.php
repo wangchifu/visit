@@ -4,6 +4,7 @@
 
 @section('content')
     <h2>{{ $visit->visit_name }}</h2>
+    <h4>{{ $visit_careers[$visit->visit_careers] }}</h4>
     <div class="col-12">
         <div class="card">
             <div class="card-header custom-title">
@@ -72,7 +73,18 @@
                                 <strong>行程簡介</strong>
                             </td>
                             <td colspan="3">
+                                <?php
+                                        $real_path = storage_path('app/public/visits_docx/'.$visit->id);
+                                        $docx = get_files($real_path);
+                                        if(!empty($docx)){
+                                            $path = asset('storage/visits_docx').'/'.$visit->id.'/'.$docx[0];
+                                        }
+                                ?>
                                 <?php $visit_about = nl2br($visit->about); ?>
+                                @if(!empty($docx[0]))
+                                    學習單：<a href="{{ $path }}"><i class="fas fa-download"></i></a>
+                                    <br>
+                                @endif
                                 {!! $visit_about !!}
                             </td>
                         </tr>

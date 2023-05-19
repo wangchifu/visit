@@ -59,7 +59,7 @@
                                     $visit_data = \App\VisitData::where('matchmaking_id',$show_match[$v][$visit->id]['id'])->first();
                                 ?>
                                 @if(!empty($visit_data->id))
-                                    日期:{{ $visit_data->visit_date }} 師:{{ $visit_data->teachers }}人 生:{{ $visit_data->students }}人
+                                    日期:{{ $visit_data->visit_date }} 師:{{ $visit_data->teachers }}人 年：{{ $visit_data->grade }} 生:{{ $visit_data->students }}人
                                 @endif
                             </td>
                             <td>

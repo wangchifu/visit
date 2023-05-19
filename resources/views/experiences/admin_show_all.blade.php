@@ -58,7 +58,7 @@
             @endforeach
             </tbody>
         </table>
-
+        {{ $experiences->links() }}
         </div>
     </div>
 </div>

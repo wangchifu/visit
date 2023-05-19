@@ -1,10 +1,10 @@
 <div class="col-12">
-    <h2><strong>{{ $visit->name }}</strong></h2>
+    <h2><strong>{{ $visit->name }}</strong></h2>    
     <div class="card">
         <div class="card-header custom-title">
             詳細內容
         </div>
-        <div class="card-body">
+        <div class="card-body">            
             <table class="table table-bordered table-light">
                 <tr>
                     <td width="130">
@@ -69,7 +69,18 @@
                             <strong>行程簡介</strong>
                         </td>
                         <td colspan="3">
+                            <?php
+                                $real_path = storage_path('app/public/visits_docx/'.$visit->id);
+                                $docx = get_files($real_path);
+                                if(!empty($docx)){
+                                    $path = asset('storage/visits_docx').'/'.$visit->id.'/'.$docx[0];
+                                }
+                            ?>
                             <?php $visit_about = nl2br($visit->about); ?>
+                            @if(!empty($docx[0]))
+                                學習單下載：<a href="{{ $path }}"><i class="fas fa-download"></i></a>
+                                <br>
+                            @endif
                             {!! $visit_about !!}
                         </td>
                     </tr>

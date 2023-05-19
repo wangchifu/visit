@@ -1,6 +1,6 @@
 @extends('layouts.master_back')
 
-@section('page-title', '廠商行程編輯-待審')
+@section('page-title', '廠商行程編輯-全部')
 
 @section('content')
     @include('layouts.bootbox')
@@ -9,10 +9,10 @@
             <h1>廠商行程編輯</h1>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">待審行程</a>
+                  <a class="nav-link" href="{{ route('visits.admin') }}">待審行程</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('visits.admin_all') }}">全部行程</a>
+                  <a class="nav-link active" href="#">全部行程</a>
                 </li>
             </ul>
         </div>
@@ -38,7 +38,7 @@
                         @foreach($visits as $visit)
                             <tr>
                                 <td>
-                                    {{ $i }}
+                                    {{ $visit->id }}
                                 </td>
                                 <td>
                                     {{ $visit->user->vendor_data->vendor_name }}
@@ -50,18 +50,23 @@
                                     <a href="{{ route('visits.admin_show',$visit->id) }}" target="_blank">{{ $visit->visit_name }}</a>
                                 </td>
                                 <td>
-                                    <strong class="text-danger">審核中</strong>
+                                    @if($visit->disable=="1")
+                                        <strong class="text-warning">送審中</strong>
+                                    @elseif($visit->disable=="2")
+                                        <strong class="text-danger">請重送</strong>
+                                    @elseif($visit->disable==null)
+                                        <strong class="text-success">已通過</strong>
+                                    @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('visits.admin_pass',$visit->id) }}" class="btn btn-success btn-sm" onclick="return confirm('確定要通過？')">通過</a>
-                                    <a href="{{ route('visits.admin_back',$visit->id) }}" class="btn btn-warning btn-sm" onclick="return confirm('確定要退回，請他重送？')">退回</a>
-                                    <a href="{{ route('visits.admin_delete',$visit->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('確定要刪除？')">刪除</a>
+                                    <a href="{{ route('visits.admin_edit',[$visit->id,$page]) }}" class="btn btn-success btn-sm">編輯</a>
                                 </td>
                             </tr>
                             <?php $i++; ?>
                         @endforeach
                         </tbody>
                     </table>
+                    {{ $visits->links() }}
                 </div>
             </div>
         </div>

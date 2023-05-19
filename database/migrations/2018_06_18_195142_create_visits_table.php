@@ -15,6 +15,7 @@ class CreateVisitsTable extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('visit_careers')->nullable();//visit_careers
             $table->string('visit_name');//課程/科系名稱
             $table->text('about');//課程/科系簡介
             $table->text('graduate')->nullable();//畢業生出路介紹

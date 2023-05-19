@@ -44,6 +44,7 @@ class SearchController extends Controller
         $groups = config('app.groups');
         $townships = config('app.townships');
         $files = get_files(storage_path('app/public/visits/'.$visit->id));
+        $visit_careers = config('app.visit_careers');
 
         $data = [
             'townships' => $townships,
@@ -51,6 +52,7 @@ class SearchController extends Controller
             'groups' => $groups,
             'files' => $files,
             'tab' => $tab,
+            'visit_careers'=>$visit_careers,
         ];
         if($action == "townships") {
             return view('searches.township_show',$data);
@@ -90,12 +92,14 @@ class SearchController extends Controller
 
         //dd($visits);
         $groups = config('app.groups');
+        $visit_careers = config('app.visit_careers');
 
         $data = [
             'group_id'=>$group_id,
             'visits' => $visits,
             'vendor' =>$groups[$group_id],
             'groups' => $groups,
+            'visit_careers'=>$visit_careers,
         ];
         //dd($visits);
         return view('searches.vendor',$data);
@@ -148,11 +152,12 @@ class SearchController extends Controller
             ->get();
 
         $groups = config('app.groups');
-
+        $visit_careers = config('app.visit_careers');
         $data=[
             'visits'=>$visits,
             'groups'=>$groups,
             'find'=>$find,
+            'visit_careers'=>$visit_careers,
         ];
         return view('searches.find',$data);
 

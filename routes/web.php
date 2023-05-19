@@ -112,6 +112,11 @@ Route::group(['middleware' => 'admin'], function () {
 
     //廠商行程審核
     Route::get('visits/admin', 'VisitsController@admin')->name('visits.admin');
+    Route::get('visits/admin_all', 'VisitsController@admin_all')->name('visits.admin_all');
+    Route::get('visits/{visit}/admin_edit/{page?}', 'VisitsController@admin_edit')->name('visits.admin_edit');
+    Route::patch('visits/{visit}/admin_update', 'VisitsController@admin_update')->name('visits.admin_update');
+    Route::get('visits/{visit_id}/{page}/admin_file_del/{file}', 'VisitsController@admin_file_delete')->name('visits.admin_file_delete');
+    Route::get('visits/{visit_id}/{page}/admin_docx_del/{file}', 'VisitsController@admin_docx_delete')->name('visits.admin_docx_delete');
     Route::get('visits/{visit}/admin_show', 'VisitsController@admin_show')->name('visits.admin_show');
     Route::get('visits/{visit}/admin_pass', 'VisitsController@admin_pass')->name('visits.admin_pass');
     Route::get('visits/{visit}/admin_back', 'VisitsController@admin_back')->name('visits.admin_back');
@@ -216,6 +221,7 @@ Route::group(['middleware' => 'vendor'], function () {
     Route::patch('visits/{visit}/update', 'VisitsController@update')->name('visits.update');
     Route::delete('visits/{visit}/destroy', 'VisitsController@destroy')->name('visits.destroy');
     Route::get('visits/{visit_id}/file_del/{file}', 'VisitsController@file_delete')->name('visits.file_delete');
+    Route::get('visits/{visit_id}/docx_del/{file}', 'VisitsController@docx_delete')->name('visits.docx_delete');
 
     //行程媒合管理
     Route::get('visits/{visit}/matching', 'VisitsController@matching')->name('visits.matching');

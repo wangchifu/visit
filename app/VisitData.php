@@ -11,6 +11,7 @@ class VisitData extends Model
         'matchmaking_id',
         'visit_date',
         'teachers',
+        'grade',
         'students',
     ];
 

@@ -20,7 +20,7 @@ if (! function_exists('get_files')) {
 }
 
 
-//刪除某目錄下的任何東西
+//刪除某目錄下的任何東西1
 if (! function_exists('delete_dir')) {
     function delete_dir($dir)
     {

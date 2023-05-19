@@ -42,7 +42,10 @@
                     <div>
                         <table class="table table-light">
                             <thead>
-                            <tr>
+                            <tr>                                
+                                <th nowrap>
+                                    行程類別
+                                </th>
                                 <th nowrap>
                                     行程名稱
                                 </th>
@@ -57,10 +60,24 @@
                             <tbody>
                             <tr>
                                 <td>
+                                    {{ $visit_careers[$visit->visit_careers ] }}
+                                </td>
+                                <td>
                                     {{ $visit->visit_name }}
                                 </td>
                                 <td>
+                                    <?php
+                                        $real_path = storage_path('app/public/visits_docx/'.$visit->id);
+                                        $docx = get_files($real_path);
+                                        if(!empty($docx)){
+                                            $path = asset('storage/visits_docx').'/'.$visit->id.'/'.$docx[0];
+                                        }
+                                    ?>
                                     <?php $about = nl2br($visit->about); ?>
+                                    @if(!empty($docx[0]))
+                                        學習單下載：<a href="{{ $path }}"><i class="fas fa-download"></i></a>
+                                        <br>
+                                    @endif
                                     <p style="font-size: 1.2rem;">
                                         {!! $about !!}
                                     </p>

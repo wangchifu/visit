@@ -5,6 +5,7 @@
 @section('content')
     <div class="row">
         <h2>{{ $visit->visit_name }}</h2>
+        <h4>{{ $visit_careers[$visit->visit_careers] }}</h4>
         <div class="col-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">

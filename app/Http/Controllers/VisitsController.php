@@ -50,13 +50,17 @@ class VisitsController extends Controller
         //
         $tabs = ['0'=>''];
         $files = [];
+        $docx = [];
         $n = count($tabs);
         $user = User::where('id',auth()->user()->id)->first();
+        $visit_careers = config('app.visit_careers');
         $data = [
             'tabs'=>$tabs,
             'n'=>$n,
             'user'=>$user,
             'files'=>$files,
+            'docx'=>$docx,
+            'visit_careers'=>$visit_careers,
         ];
 
         return view('visits.create',$data);
@@ -70,6 +74,7 @@ class VisitsController extends Controller
      */
     public function store(VisitRequest $request)
     {
+        $att['visit_careers'] = $request->input('visit_careers');        
         $att['visit_name'] = $request->input('visit_name');
         $att['graduate'] = $request->input('graduate');
         $att['about'] = $request->input('about');
@@ -105,6 +110,18 @@ class VisitsController extends Controller
         send_mail($to,$subject,$body);
 
 
+    
+        //處理學習單
+        if($request->hasFile('docx')){
+            $docx = $request->file('docx');
+            $docx_info = [
+                //'mime-type' => $file->getMimeType(),
+                'original_filename' => $docx->getClientOriginalName(),
+                'extension' => $docx->getClientOriginalExtension(),
+                //'size' => $docx->getClientSize(),
+            ];
+            $docx->storeAs('public/visits_docx/'.$visit->id, $docx_info['original_filename']);            
+        }
 
         $folder = 'visits/'.$visit->id;
 
@@ -148,10 +165,11 @@ class VisitsController extends Controller
     {
         //有無附件
         $files = get_files(storage_path('app/public/visits/'.$visit->id));
-
+        $visit_careers = config('app.visit_careers');
         $data = [
             'visit'=>$visit,
             'files'=>$files,
+            'visit_careers'=>$visit_careers,
         ];
         return view('visits.show',$data);
     }
@@ -169,12 +187,19 @@ class VisitsController extends Controller
         $n = count($tabs);
         //有無附件
         $files = get_files(storage_path('app/public/visits/'.$visit->id));
+        $visit_careers = config('app.visit_careers');
+        
+        //有無學習單
+        $real_path = storage_path('app/public/visits_docx/'.$visit->id);
+        $docx = get_files($real_path);
         $data = [
             'visit'=>$visit,
             'user'=>$user,
             'tabs'=>$tabs,
             'n'=>$n,
             'files'=>$files,
+            'docx'=>$docx,
+            'visit_careers'=>$visit_careers,
         ];
 
         return view('visits.edit',$data);
@@ -194,6 +219,7 @@ class VisitsController extends Controller
             $words = "你不是這行程的所有者！";
             return view('layouts.errors',compact('words'));
         }else{
+            $att['visit_careers'] = $request->input('visit_careers');       
             $att['visit_name'] = $request->input('visit_name');
             $att['graduate'] = $request->input('graduate');
             $att['about'] = $request->input('about');
@@ -255,6 +281,22 @@ class VisitsController extends Controller
                 }
             }
 
+            //處理學習單
+            if($request->hasFile('docx')){
+                $docx = $request->file('docx');
+                $docx_info = [
+                    //'mime-type' => $file->getMimeType(),
+                    'original_filename' => $docx->getClientOriginalName(),
+                    'extension' => $docx->getClientOriginalExtension(),
+                    //'size' => $docx->getClientSize(),
+                ];
+                if(is_dir(storage_path('app/public/visits_docx/'.$visit->id))){
+                    delete_dir(storage_path('app/public/visits_docx/'.$visit->id));
+                }
+                
+                $docx->storeAs('public/visits_docx/'.$visit->id, $docx_info['original_filename']);            
+            }
+
             return redirect()->route('visits.index');
         }
 
@@ -273,7 +315,14 @@ class VisitsController extends Controller
             return view('layouts.errors',compact('words'));
         }else{
             $folder = storage_path('app/public/visits/'.$visit->id);
-            delete_dir($folder);
+            if(is_dir($folder)){
+                delete_dir($folder);
+            }
+            
+            $folder2 = storage_path('app/public/visits_docx/'.$visit->id);
+            if(is_dir($folder2)){
+                delete_dir($folder2);
+            }
 
             Matchmaking::where('visit_id',$visit->id)->delete();
             $visit->delete();
@@ -291,6 +340,23 @@ class VisitsController extends Controller
             return view('layouts.errors',compact('words'));
         }
         $real_file = storage_path('app/public/visits/'.$visit_id."/".$file);
+        if(file_exists($real_file)){
+            unlink($real_file);
+        }
+
+        return redirect()->route('visits.edit',$visit_id);
+
+    }
+
+    public function docx_delete($visit_id,$file)
+    {
+        $visit = Visit::where('id',$visit_id)->first();
+
+        if($visit->user_id != auth()->user()->id){
+            $words = "你想做什麼？";
+            return view('layouts.errors',compact('words'));
+        }
+        $real_file = storage_path('app/public/visits_docx/'.$visit_id."/".$file);
         if(file_exists($real_file)){
             unlink($real_file);
         }
@@ -417,11 +483,148 @@ class VisitsController extends Controller
 
     public function admin()
     {
+        //
         $visits = Visit::where('disable','1')->orderBy('id','DESC')->get();
+        $visit_careers = config('app.visit_careers');
         $data = [
-            'visits'=>$visits
+            'visits'=>$visits,
+            'visit_careers'=>$visit_careers,
         ];
         return view('visits.admin',$data);
+    }
+
+    public function admin_all(Request $request)
+    {
+        //
+        $page = $request->input('page');
+        $visits = Visit::orderBy('id','DESC')->paginate(10);
+        $visit_careers = config('app.visit_careers');
+        $data = [
+            'visits'=>$visits,
+            'visit_careers'=>$visit_careers,
+            'page'=>$page,
+        ];
+        return view('visits.admin_all',$data);
+    }
+
+    public function admin_edit(Visit $visit,$page=null)
+    {
+        //dd($page);
+        if(is_null($page)) $page = 1;
+        $user = auth()->user();
+        $tabs = explode(',',$visit->tabs);
+        $n = count($tabs);
+        //有無附件
+        $files = get_files(storage_path('app/public/visits/'.$visit->id));
+        $visit_careers = config('app.visit_careers');
+        
+        //有無學習單
+        $real_path = storage_path('app/public/visits_docx/'.$visit->id);
+        $docx = get_files($real_path);
+        $data = [
+            'page'=>$page,
+            'visit'=>$visit,
+            'user'=>$user,
+            'tabs'=>$tabs,
+            'n'=>$n,
+            'files'=>$files,
+            'docx'=>$docx,
+            'visit_careers'=>$visit_careers,
+        ];
+
+        return view('visits.admin_edit',$data);
+    }
+
+    public function admin_update(VisitRequest $request,Visit $visit)
+    {
+        $att['visit_careers'] = $request->input('visit_careers');       
+        $att['visit_name'] = $request->input('visit_name');
+        $att['graduate'] = $request->input('graduate');
+        $att['about'] = $request->input('about');
+        $page = $request->input('page');
+        //$att['views'] = 0;
+        //$att['visits'] = 0;
+        //$att['tabs'] = serialize($request->input('tabs'));
+        $att['tabs'] = "";
+        foreach($request->input('tabs') as $k => $v){
+            $att['tabs'] .= $v.",";
+        }
+        $att['tabs'] = substr($att['tabs'],0,-1);
+
+        $visit->update($att);
+
+        $folder = 'visits/'.$visit->id;
+
+        //處理檔案上傳
+        if ($request->hasFile('files')) {
+            $files = $request->file('files');
+            foreach($files as $file){
+                $info = [
+                    //'mime-type' => $file->getMimeType(),
+                    'original_filename' => $file->getClientOriginalName(),
+                    'extension' => $file->getClientOriginalExtension(),
+                    'size' => $file->getClientSize(),
+                ];
+
+                $file->storeAs('public/' . $folder, $info['original_filename']);
+                $file_path = storage_path('app/public/'.$folder.'/'.$info['original_filename']);
+
+                $img = Image::make($file_path);
+
+                $img->resize(800,null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                //$img->crop(800, 300,0,0);
+                //$img->resize(800,600);
+                $img->save($file_path);
+
+            }
+        }
+
+        //處理學習單
+        if($request->hasFile('docx')){
+            $docx = $request->file('docx');
+            $docx_info = [
+                //'mime-type' => $file->getMimeType(),
+                'original_filename' => $docx->getClientOriginalName(),
+                'extension' => $docx->getClientOriginalExtension(),
+                //'size' => $docx->getClientSize(),
+            ];
+            if(is_dir(storage_path('app/public/visits_docx/'.$visit->id))){
+                delete_dir(storage_path('app/public/visits_docx/'.$visit->id));
+            }
+            
+            $docx->storeAs('public/visits_docx/'.$visit->id, $docx_info['original_filename']);            
+        }
+
+        return redirect(url('visits/admin_all'.'?page='.$page));
+
+    }
+
+    public function admin_file_delete($visit_id,$page,$file)
+    {
+        $visit = Visit::where('id',$visit_id)->first();
+
+        $real_file = storage_path('app/public/visits/'.$visit_id."/".$file);
+        if(file_exists($real_file)){
+            unlink($real_file);
+        }
+
+        return redirect(url('visits/'.$visit_id.'/admin_edit/'.$page));
+
+    }
+
+    public function admin_docx_delete($visit_id,$page,$file)
+    {
+        $visit = Visit::where('id',$visit_id)->first();
+
+        $real_file = storage_path('app/public/visits_docx/'.$visit_id."/".$file);
+        if(file_exists($real_file)){
+            unlink($real_file);
+        }
+
+        return redirect(url('visits/'.$visit_id.'/admin_edit/'.$page));
+
     }
 
     public function admin_show(Visit $visit)
@@ -430,12 +633,13 @@ class VisitsController extends Controller
         $groups = config('app.groups');
         $townships = config('app.townships');
         $files = get_files(storage_path('app/public/visits/'.$visit->id));
-
+        $visit_careers = config('app.visit_careers');
         $data = [
             'townships' => $townships,
             'visit' => $visit,
             'groups' => $groups,
             'files' => $files,
+            'visit_careers'=>$visit_careers,
         ];
 
         return view('visits.admin_show',$data);

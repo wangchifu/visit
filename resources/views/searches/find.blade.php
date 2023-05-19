@@ -37,6 +37,7 @@
                                         <tr>
                                             <td>
                                                 <h3>{{ $visit->visit_name }}</h3>
+                                                <h5>{{ $visit_careers[$visit->visit_careers] }}</h5>
                                             </td>
                                             <td class="text-left">
                                                 @foreach(explode(',',$visit->tabs) as $v)

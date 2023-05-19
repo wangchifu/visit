@@ -28,6 +28,9 @@
                     申請時間
                 </th>
                 <th nowrap>
+                    參加資訊
+                </th>
+                <th nowrap>
                     狀況
                 </th>
             </tr>
@@ -60,6 +63,17 @@
                     </td>
                     <td>
                         {{ $matchmaking->created_at }}
+                    </td>
+                    <td>
+                        <?php
+                            $visit_data = \App\VisitData::where('matchmaking_id',$matchmaking->id)->first();
+                        ?>
+                        @if(!empty($visit_data->id))
+                            日期:{{ $visit_data->visit_date }}<br>
+                            師:{{ $visit_data->teachers }}人<br>
+                            年：{{ $visit_data->grade }}<br>
+                            生:{{ $visit_data->students }}人
+                        @endif
                     </td>
                     <td>
                         @if($matchmaking->situation == "1")
