@@ -113,6 +113,8 @@ Route::group(['middleware' => 'admin'], function () {
     //廠商行程審核
     Route::get('visits/admin', 'VisitsController@admin')->name('visits.admin');
     Route::get('visits/admin_all', 'VisitsController@admin_all')->name('visits.admin_all');
+    Route::get('visits/admin_list', 'VisitsController@admin_list')->name('visits.admin_list');
+    Route::post('visits/admin_list_download', 'VisitsController@admin_list_download')->name('visits.admin_list_download');
     Route::get('visits/{visit}/admin_edit/{page?}', 'VisitsController@admin_edit')->name('visits.admin_edit');
     Route::patch('visits/{visit}/admin_update', 'VisitsController@admin_update')->name('visits.admin_update');
     Route::get('visits/{visit_id}/{page}/admin_file_del/{file}', 'VisitsController@admin_file_delete')->name('visits.admin_file_delete');

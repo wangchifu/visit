@@ -7,8 +7,10 @@ use App\Matchmaking;
 use App\SchoolData;
 use App\User;
 use App\Visit;
+use App\VisitData;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class VisitsController extends Controller
 {
@@ -505,6 +507,123 @@ class VisitsController extends Controller
             'page'=>$page,
         ];
         return view('visits.admin_all',$data);
+    }
+    public function admin_list()
+    {
+        //
+        
+        $data = [
+
+        ];
+        return view('visits.admin_list',$data);
+    }
+
+    public function admin_list_download(Request $request)
+    {
+        $att = $request->all();
+        //dd($att);
+        $visit_careers = config('app.visit_careers');
+        $visit_datas = VisitData::where('visit_date','>=',$att['start'])
+        ->where('visit_date','<=',$att['stop'])
+        ->orderBy('visit_date','DESC')
+        ->get();
+
+        if($att['action']=="action1"){
+            $i=1;
+            foreach($visit_datas as $visit_data){
+                if(!empty($visit_data->matchmaking->visit)){
+                    if($visit_data->matchmaking->visit->user->group_id=="16"){
+                        $data[$i]['編號'] = $i;
+                        if(empty($visit_data->matchmaking->visit->visit_careers)){
+                            $data[$i]['相關類別及職群'] = "-";
+                        }else{
+                            $data[$i]['相關類別及職群'] = $visit_careers[$visit_data->matchmaking->visit->visit_careers];
+                        }
+                        $data[$i]['名稱'] = $visit_data->matchmaking->visit->visit_name;
+                        $data[$i]['地址'] = $visit_data->matchmaking->visit->user->address;
+                        $data[$i]['聯絡人'] = $visit_data->matchmaking->visit->user->name;
+                        $data[$i]['服務電話'] = $visit_data->matchmaking->visit->user->telephone_number;
+                        $visit_id = $visit_data->matchmaking->visit_id;
+                        $docx = get_files(storage_path('app/public/visits_docx/'.$visit_id));
+                        if(empty($docx[0])){
+                            $data[$i]['提供課程教案或活動學習單'] = " ";
+                        }else{
+                            $data[$i]['提供課程教案或活動學習單'] = "V";
+                        }
+                        $data[$i]['最近一次參訪時間'] = $visit_data->visit_date;
+                        if(empty($visit_data->user->school_data)){
+                            $unit = " ";
+                        }else{
+                            $unit = $visit_data->user->school_data->school_name;
+                        }
+                        $data[$i]['參訪人員'] = $unit." 教職".$visit_data->teachers."名 帶領 ".$visit_data->grade." 學生".$visit_data->students."名";
+                        $data[$i]['行程簡介'] = $visit_data->matchmaking->visit->about;
+                        if(empty($visit_data->matchmaking->visit->user->vendor_data)){
+                            $data[$i]['單位簡介'] = " ";
+                        }else{
+                            $data[$i]['單位簡介'] = $visit_data->matchmaking->visit->user->vendor_data->about;
+                        }
+                        $i++;   
+                    }
+                }
+                                  
+            }
+            $data2 = [
+                'data'=>$data,
+            ];
+            if($att['submit'] == "列出名冊"){
+                return view('visits.admin_list_show',$data2);
+            }
+            if($att['submit'] == "下載 Excel"){
+                $list = collect($data);
+                return (new FastExcel($list))->download('1-建立及公告相關產(企)業參訪地點資訊.xlsx');
+            }
+            
+        }
+
+        if($att['action']=="action2"){
+            $i=1;
+            foreach($visit_datas as $visit_data){
+                if(!empty($visit_data->matchmaking->visit)){
+                    if($visit_data->matchmaking->visit->user->group_id=="32"){
+                        $data[$i]['編號'] = $i;
+                        if(empty($visit_data->matchmaking->visit->visit_careers)){
+                            $data[$i]['相關類別及職群'] = "-";
+                        }else{
+                            $data[$i]['相關類別及職群'] = $visit_careers[$visit_data->matchmaking->visit->visit_careers];
+                        }
+                        $data[$i]['姓名'] = $visit_data->matchmaking->visit->user->name;
+                        if(empty($visit_data->matchmaking->visit->user->vendor_data)){
+                            $data[$i]['單位簡介'] = " ";
+                        }else{
+                            $data[$i]['單位簡介'] = $visit_data->matchmaking->visit->user->vendor_data->about;
+                        }
+                        $data[$i]['單位地址'] = $visit_data->matchmaking->visit->user->address;
+                        $data[$i]['宣講時間'] = $visit_data->visit_date;
+                        if(empty($visit_data->user->school_data)){
+                            $unit = " ";
+                        }else{
+                            $unit = $visit_data->user->school_data->school_name;
+                        }
+                        $data[$i]['參加人員'] = $unit." 教職".$visit_data->teachers."名 帶領 ".$visit_data->grade." 學生".$visit_data->students."名";
+                        $data[$i]['服務電話'] = $visit_data->matchmaking->visit->user->telephone_number;
+                        $i++;
+                    }
+                }
+            }
+            
+            $data2 = [
+                'data'=>$data,
+            ];
+            if($att['submit'] == "列出名冊"){
+                return view('visits.admin_list_show',$data2);
+            }
+            if($att['submit'] == "下載 Excel"){
+                $list = collect($data);
+                return (new FastExcel($list))->download('2-建立及公告職涯宣講人員名單.xlsx');
+            }
+        }
+
     }
 
     public function admin_edit(Visit $visit,$page=null)

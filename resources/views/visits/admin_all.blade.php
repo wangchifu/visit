@@ -1,18 +1,21 @@
 @extends('layouts.master_back')
 
-@section('page-title', '廠商行程編輯-全部')
+@section('page-title', '廠商行程管理-全部')
 
 @section('content')
     @include('layouts.bootbox')
     <div class="row">
         <div class="col-12">
-            <h1>廠商行程編輯</h1>
+            <h1>廠商行程管理</h1>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('visits.admin') }}">待審行程</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link active" href="#">全部行程</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('visits.admin_list') }}">列冊下載</a>
                 </li>
             </ul>
         </div>

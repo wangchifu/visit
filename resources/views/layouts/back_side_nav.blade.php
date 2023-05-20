@@ -18,7 +18,7 @@
         <div class="feature-box-icon"><i class="fas fa-users"></i></div>全部帳號管理
     </a>
     <a href="{{ route('visits.admin') }}" class="list-group-item list-group-item-action feature-box-grass">
-        <div class="feature-box-icon"><i class="fas fa-handshake"></i></div>廠商行程編輯
+        <div class="feature-box-icon"><i class="fas fa-handshake"></i></div>廠商行程管理
     </a>
     <a href="{{ route('skills.admin') }}" class="list-group-item list-group-item-action feature-box-grass">
         <div class="feature-box-icon"><i class="far fa-hand-rock"></i></div>國中技藝管理
