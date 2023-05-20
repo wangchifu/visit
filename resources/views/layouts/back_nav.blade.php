@@ -14,6 +14,10 @@
                 <ul class="navbar-nav feature-box ml-auto">
                     <li><a href="{{ route('index') }}" class="mr-1 btn btn-round btn-kikyo"><i class="fas fa-angle-double-left"></i>
                             返回前台</a></li>
+                    @impersonating($guard = null)
+                    <li><a href="{{ route('sims.impersonate_leave') }}" class="mr-1 btn btn-round btn-secondary" onclick="return confirm('結束模擬？')"><i class="fas fa-sign-out-alt"></i>
+                            結束模擬</a></li>
+                    @endImpersonating
                 </ul>
             </div>
         </nav>

@@ -39,6 +39,9 @@
                     <th>
                         單位
                     </th>
+                    <th>
+                        動作
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,6 +62,11 @@
                         {{ $user->vendor_data->vendor_name }}
                         @endif
                     @endif
+                    </td>
+                    <td>
+                        @if($user->id != auth()->user()->id)
+                        <a href="{{ route('sims.impersonate',$user->id) }}" class="btn btn-secondary btn-sm" onclick="return confirm('確定要模擬這個帳號？')">模擬</a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
