@@ -69,9 +69,9 @@
                         @endif
                     </td>
                     <td>
-                        @if($matchmaking->situation == "2")
+                        
                         <a href="{{ route('experiences.index',$matchmaking) }}" class="btn btn-primary btm-sm"><i class="fas fa-upload"></i> 上傳</a>
-                        @endif
+                        
                     </td>
                 </tr>
             @endforeach
