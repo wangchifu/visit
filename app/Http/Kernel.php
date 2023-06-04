@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class, //管理員中介層
         'ztan' => \App\Http\Middleware\ZtanMiddleware::class, //職探中心中介層
+        'post' => \App\Http\Middleware\PostMiddleware::class, //管理員and職探中心中介層
         'school' => \App\Http\Middleware\SchoolMiddleware::class, //學校中介層
         'vendor' => \App\Http\Middleware\VendorMiddleware::class, //學校中介層
         'skill' => \App\Http\Middleware\SkillMiddleware::class, //高中職國中技藝教育中介層

@@ -94,6 +94,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sims/impersonate_leave', 'SimulationController@impersonate_leave')->name('sims.impersonate_leave');
 });
 
+//管理員and職探中心權限才能進入
+Route::group(['middleware' => 'post'], function () {
+    # 公告系統
+    Route::get('posts/create', 'PostController@create')->name('posts.create');
+    Route::post('posts', 'PostController@store')->name('posts.store');
+    Route::get('posts/{post}/edit', 'PostController@edit')->name('posts.edit');
+    Route::patch('posts/{post}', 'PostController@update')->name('posts.update');
+    Route::delete('posts/{post}', 'PostController@destroy')->name('posts.destroy');
+    //刪檔案
+    Route::get('posts/{file}/fileDel', 'PostController@fileDel')->name('posts.fileDel');
+});
+
 //管理員權限才能進入
 Route::group(['middleware' => 'admin'], function () {
     Route::get('users/index', 'UsersController@index')->name('users.index');
@@ -140,16 +152,6 @@ Route::group(['middleware' => 'admin'], function () {
 
     //查看全部媒合
     Route::get('matchmaking_all', 'MatchmakingsController@all')->name('matchmaking_all');
-
-
-    # 公告系統
-    Route::get('posts/create', 'PostController@create')->name('posts.create');
-    Route::post('posts', 'PostController@store')->name('posts.store');
-    Route::get('posts/{post}/edit', 'PostController@edit')->name('posts.edit');
-    Route::patch('posts/{post}', 'PostController@update')->name('posts.update');
-    Route::delete('posts/{post}', 'PostController@destroy')->name('posts.destroy');
-    //刪檔案
-    Route::get('posts/{file}/fileDel', 'PostController@fileDel')->name('posts.fileDel');
 
     //查看全部心得
     Route::get('experience_all', 'ExperienceController@all')->name('experience_all');

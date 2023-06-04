@@ -6,7 +6,7 @@
 <div class="content-info">
     <h2>最新公告</h2>
     @auth
-    @if(auth()->user()->group_id =="1")
+    @if(auth()->user()->group_id =="1" or auth()->user()->group_id =="4")
     <a href="{{ route('posts.create') }}" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> 新增公告</a>
     @endif
     @endauth
