@@ -7,7 +7,7 @@
     <h2>{{ $post->title }}</h2>
     <small>發布單位： {{ $post->user->name }} ｜ 發布日期： {{ substr($post->created_at,0,10) }} ｜ 點閱： {{ $post->views }}</small>
     @auth
-    @if(auth()->user()->group_id =="1" or auth()->user()->group_id =="4")
+    @if((auth()->user()->group_id =="1" or auth()->user()->group_id =="4") and $post->user_id == auth()->user()->id)
         <a href="{{ route('posts.edit',$post->id) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i> 修改公告</a>
         <button type="submit" class="btn btn-danger btn-sm" onclick="if(confirm('您確定要刪除嗎?')) getElementById('delete').submit();else return false"><i class="fas fa-times"></i> 刪除公告</button>
             {{ Form::open(['route' => ['posts.destroy',$post->id], 'method' => 'DELETE','id'=>'delete']) }}
