@@ -8,9 +8,7 @@
             <div class="col-12">
                 <div class="">
                     <h2>參訪體驗地圖</h2>
-                    <h5>An Experience Map</h5>
-                    <br>
-                    <a class="h3" href="{{ route('searches.township','999') }}">👉 其他縣市</a>
+                    <h5>An Experience Map</h5>                                        
                     <!-- Pop UP -->
                     <div class="col-12">
                         <!-- 彰化市 -->
@@ -729,7 +727,7 @@
                             <area shape="poly" coords="413,80" href="javascript:;" />
                         </map>
 
-
+                        <span class="btn btn-success" onclick="javascript:location.href='{{ route('searches.township','999') }}'">其他縣市</span>
                     </div>
                 </div>
             </div>
