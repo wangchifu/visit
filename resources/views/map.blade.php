@@ -9,6 +9,8 @@
                 <div class="">
                     <h2>參訪體驗地圖</h2>
                     <h5>An Experience Map</h5>
+                    <br>
+                    <a class="h3" href="{{ route('searches.township','999') }}">👉 其他縣市</a>
                     <!-- Pop UP -->
                     <div class="col-12">
                         <!-- 彰化市 -->
