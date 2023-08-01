@@ -53,6 +53,12 @@
         <a href="{{ route('courses.index') }}" class="list-group-item list-group-item-action feature-box-grass">
             <div class="feature-box-icon"><i class="fas fa-book"></i></div>職探課程管理
         </a>
+        <a href="{{ route('visits.vendor_user') }}" class="list-group-item list-group-item-action feature-box-grass">
+            <div class="feature-box-icon"><i class="fas fa-users"></i></div>模擬廠商身分
+        </a>
+        <a href="{{ route('visits.admin') }}" class="list-group-item list-group-item-action feature-box-grass">
+            <div class="feature-box-icon"><i class="fas fa-handshake"></i></div>廠商行程管理
+        </a>
     @endif
 
     @if(auth()->user()->group_id >=8 )

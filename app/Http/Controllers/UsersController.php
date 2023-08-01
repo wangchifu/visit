@@ -71,6 +71,19 @@ class UsersController extends Controller
         return view('users.all_user',$data);
     }
 
+    function vendor_user(Request $request)
+    {
+        $group_id = (empty($request->input('group_id')))?"16":$request->input('group_id');
+        $users = User::where('group_id',$group_id)->get();
+
+        $data = [
+            'group_id'=>$group_id,
+            'users'=>$users,
+        ];
+
+        return view('ztans.vendor_user',$data);
+    }
+
     public function search(Request $request)
     {
         $find = $request->input('find');

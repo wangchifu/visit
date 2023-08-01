@@ -14,6 +14,15 @@ class SimulationController extends Controller
         return redirect()->route('index');
     }
 
+    public function impersonate_vendor(User $user)
+    {
+        if($user->group_id != "16" and $user->group_id != "32"){
+            return back();
+        }
+        Auth::user()->impersonate($user);
+        return redirect()->route('index');
+    }
+
     public function impersonate_leave()
     {
         Auth::user()->leaveImpersonation();

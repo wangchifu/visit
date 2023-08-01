@@ -104,6 +104,22 @@ Route::group(['middleware' => 'post'], function () {
     Route::delete('posts/{post}', 'PostController@destroy')->name('posts.destroy');
     //刪檔案
     Route::get('posts/{file}/fileDel', 'PostController@fileDel')->name('posts.fileDel');
+
+    //廠商行程審核
+    Route::get('visits/admin', 'VisitsController@admin')->name('visits.admin');
+    Route::get('visits/admin_all', 'VisitsController@admin_all')->name('visits.admin_all');
+    Route::get('visits/admin_list', 'VisitsController@admin_list')->name('visits.admin_list');
+    Route::post('visits/admin_list_download', 'VisitsController@admin_list_download')->name('visits.admin_list_download');
+    Route::get('visits/{visit}/admin_edit/{page?}', 'VisitsController@admin_edit')->name('visits.admin_edit');
+    Route::patch('visits/{visit}/admin_update', 'VisitsController@admin_update')->name('visits.admin_update');
+    Route::get('visits/{visit_id}/{page}/admin_file_del/{file}', 'VisitsController@admin_file_delete')->name('visits.admin_file_delete');
+    Route::get('visits/{visit_id}/{page}/admin_docx_del/{file}', 'VisitsController@admin_docx_delete')->name('visits.admin_docx_delete');
+    Route::get('visits/{visit}/admin_show', 'VisitsController@admin_show')->name('visits.admin_show');
+    Route::get('visits/{visit}/admin_pass', 'VisitsController@admin_pass')->name('visits.admin_pass');
+    Route::get('visits/{visit}/admin_back', 'VisitsController@admin_back')->name('visits.admin_back');
+    Route::get('visits/{visit}/admin_delete', 'VisitsController@admin_delete')->name('visits.admin_delete');
+
+
 });
 
 //管理員權限才能進入
@@ -122,19 +138,6 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('users/{user}/destroy', 'UsersController@destroy')->name('users.destroy');
 
-    //廠商行程審核
-    Route::get('visits/admin', 'VisitsController@admin')->name('visits.admin');
-    Route::get('visits/admin_all', 'VisitsController@admin_all')->name('visits.admin_all');
-    Route::get('visits/admin_list', 'VisitsController@admin_list')->name('visits.admin_list');
-    Route::post('visits/admin_list_download', 'VisitsController@admin_list_download')->name('visits.admin_list_download');
-    Route::get('visits/{visit}/admin_edit/{page?}', 'VisitsController@admin_edit')->name('visits.admin_edit');
-    Route::patch('visits/{visit}/admin_update', 'VisitsController@admin_update')->name('visits.admin_update');
-    Route::get('visits/{visit_id}/{page}/admin_file_del/{file}', 'VisitsController@admin_file_delete')->name('visits.admin_file_delete');
-    Route::get('visits/{visit_id}/{page}/admin_docx_del/{file}', 'VisitsController@admin_docx_delete')->name('visits.admin_docx_delete');
-    Route::get('visits/{visit}/admin_show', 'VisitsController@admin_show')->name('visits.admin_show');
-    Route::get('visits/{visit}/admin_pass', 'VisitsController@admin_pass')->name('visits.admin_pass');
-    Route::get('visits/{visit}/admin_back', 'VisitsController@admin_back')->name('visits.admin_back');
-    Route::get('visits/{visit}/admin_delete', 'VisitsController@admin_delete')->name('visits.admin_delete');
 
 
     //國中技藝班
@@ -265,4 +268,7 @@ Route::group(['middleware' => 'ztan'], function () {
     //Route::get('questions/{course}/edit', 'QuestionsController@edit')->name('questions.edit');
     //Route::patch('questions/{course}/update', 'QuestionsController@update')->name('questions.update');
     Route::delete('questions/{question}/destroy', 'QuestionsController@destroy')->name('questions.destroy');
+
+    Route::any('visits/vendor_user', 'UsersController@vendor_user')->name('visits.vendor_user');
+    Route::get('sims_vendor/{user}/impersonate', 'SimulationController@impersonate_vendor')->name('sims.impersonate_vendor');
 });
