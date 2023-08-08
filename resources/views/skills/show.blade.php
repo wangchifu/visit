@@ -15,7 +15,9 @@
                     <li class="breadcrumb-item active" aria-current="page">詳看內容</li>
                 </ol>
             </nav>
+            <!--
             <h3>學期：{{ $skill->semester }}</h3>
+            -->
             <h3>承辦學校：{{ $school_data['school'] }}</h3>
             <h3>辦理方式：{{ $school_data['type'] }}</h3>
             <div class="card">

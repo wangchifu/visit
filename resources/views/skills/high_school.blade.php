@@ -20,9 +20,11 @@
                 <table class="table table-hover table-light">
                     <thead>
                     <tr>
+                        <!--
                         <th width="150">
                             學期
                         </th>
+                        -->
                         <th width="200">
                             辦理學校
                         </th>
@@ -34,9 +36,11 @@
                     <tbody>
                     @foreach($skills as $skill)
                     <tr>
+                        <!--
                         <td>
                             {{ $skill->semester }}
                         </td>
+                        -->
                         <td>
                             {{ $school_name }}
                         </td>

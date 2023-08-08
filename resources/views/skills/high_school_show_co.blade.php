@@ -20,9 +20,11 @@
                 <table class="table table-striped table-light">
                     <thead>
                     <tr>
+                        <!--
                         <th nowrap>
                             學期
                         </th>
+                        -->
                         <th nowrap>
                             辦理學校
                         </th>
@@ -37,9 +39,11 @@
                     <tbody>
                     @foreach($skills as $skill)
                     <tr>
+                        <!--
                         <td>
                             {{ $skill->semester }}
                         </td>
+                        -->
                         <td>
                             {{ $school_name }}
                         </td>

@@ -9,7 +9,8 @@
             國中技藝教育-職群介紹
         </h1>
         <div class="col-12">
-            <h3>學期：{{ $skill->semester }}</h3>
+            <!--
+            <h3>學期：{{ $skill->semester }}</h3>-->
             <h3>承辦學校：{{ $school_data['name'] }}</h3>
             <h3>辦理方式：{{ $school_data['type'] }}</h3>
             <div class="card">
