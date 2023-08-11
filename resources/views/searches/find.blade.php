@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row">
-        <h2>查詢「{{ $find }}」行程</h2>
+        <h2>{{ $groups[$group_id] }}查詢「{{ $find }}」行程</h2>
         <div class="col-12">
             <div class="card">
                 <div class="card-header custom-title2">

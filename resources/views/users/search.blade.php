@@ -49,7 +49,7 @@
                         狀況
                     </th>
                     <th>
-                        編修
+                        動作
                     </th>
                 </tr>
                 </thead>
@@ -84,6 +84,7 @@
                     <td>
                         @if($user->group_id != '1' and $user->group_id != "2")
                         <a href="{{ route('users.edit',['user'=>$user->id,'page'=>0]) }}" class="btn btn-primary  btn-sm">編修</a>
+                        <a href="{{ route('users.destroy',$user->id) }}" class="btn btn-danger  btn-sm" onclick="return window.confirm('確定刪除？確定？')">刪除</a>
                         @endif
                         @if($user->login_type=="local")
                         <a href="{{ route('users.reset_pwd',$user->id) }}" class="btn btn-info btn-sm" onclick="return window.confirm('確定要還原 {{ $user->username }} 的密碼為 {{ env('DEFAULT_USER_PWD') }}')"><i class="fas fa-undo-alt"></i> 密</a>

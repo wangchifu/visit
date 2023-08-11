@@ -44,7 +44,11 @@
                                     {{ $visit->id }}
                                 </td>
                                 <td>
+                                    @if(isset($visit->user->vendor_data->vendor_name))
                                     {{ $visit->user->vendor_data->vendor_name }}
+                                    @else
+                                    <span class="text-danger">遺失</span>
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $visit_careers[$visit->visit_careers] }}

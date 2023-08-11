@@ -35,6 +35,7 @@
                 </div>
             </div>
             <br>
+            <!--
             @if($skill->type=="1")
                 @auth
                     @if(auth()->user()->group_id=="2")
@@ -60,6 +61,7 @@
                         <strong class="text-danger">國中端請登入申請</strong>
                 @endguest
             @endif
+            -->
         </div>
     </div>
 </div>

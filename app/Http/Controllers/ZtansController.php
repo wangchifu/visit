@@ -192,8 +192,16 @@ class ZtansController extends Controller
 
     public function intro_ztan(User $user)
     {
+        $courses = Course::where('disable',null)
+        ->where('user_id',$user->id)
+        ->orderBy('active_date','DESC')
+            ->paginate(20);
+        $ztans = User::where('group_id',4)->get();        
+
         $data = [
             'user'=>$user,
+            'courses'=>$courses,
+            'ztans'=>$ztans,
         ];
 
         return view('intro_ztan',$data);

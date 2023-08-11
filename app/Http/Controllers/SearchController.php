@@ -131,11 +131,12 @@ class SearchController extends Controller
         $find = $request->input('find');
         $group_id = $request->input('group_id');
 
+        /**
         if(mb_strlen($find) < 2){
             $words = "搜尋字元至少要二個字！";
             return view('layouts.error',compact('words'));
         }
-
+        */
         $visits = DB::table('visits')
             ->join('vendor_datas','vendor_datas.user_id','=','visits.user_id')
             ->join('users','users.id','=','visits.user_id')
@@ -156,6 +157,7 @@ class SearchController extends Controller
         $data=[
             'visits'=>$visits,
             'groups'=>$groups,
+            'group_id'=>$group_id,
             'find'=>$find,
             'visit_careers'=>$visit_careers,
         ];

@@ -197,7 +197,7 @@ class SkillsController extends Controller
 
     public function index()
     {
-        $skills = Skill::orderBy('id','DESC')
+        $skills = Skill::orderBy('type')
             ->paginate(20);
 
         $skill_data=[];
