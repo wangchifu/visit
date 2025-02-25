@@ -150,11 +150,11 @@ class OpenIDController extends Controller
                 $att2['title'] = $user_obj['title'];
                 $att2['edu_key'] = $user_obj['personid'];
                 $att2['uid'] = "no uid";
-                dd($att2);
+                //dd($att2);
                 //$att2['user_id'] = $school_data->user->id;
                 $school_data->update($att2);
                 
-                Auth::login($user);
+                Auth::login($school_data->user);
                 return redirect()->route('index');                                                             
             }            
         
