@@ -134,7 +134,7 @@ class OpenIDController extends Controller
             $school_data = SchoolData::where('edu_key', $user_obj['personid'])                
                 ->first();
 
-            if (empty($user)) {
+            if (empty($school_data)) {
                 return redirect()->route('gsuite.register');                      
             } else {                
                 //更新密碼
