@@ -25,6 +25,11 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('register', 'Auth\LoginController@register')->name('register');
 Route::post('do_register', 'Auth\LoginController@do_register')->name('do.register');
 
+//openid登入
+//Route::get('openid_get', 'OpenIdLoginController@openid_get')->name('openid_get');
+Route::get('sso', 'OpenIDController@sso')->name('sso');
+Route::get('auth/callback', 'OpenIDController@callback')->name('callback');
+
 Route::get('pic', 'HomeController@pic')->name('pic');
 
 //登出
