@@ -110,15 +110,27 @@ class OpenIDController extends Controller
       //echo "<hr>";
       //print_r($edufile);      
       //die();
+      $schools_name = config('app.schools_name');
+
 
       $user_obj['username'] = $userinfo['sub'];
       $user_obj['password'] = "openID";
-      $user_obj['success'] = 1;
+      $user_obj['success'] = 1;            
       $user_obj['name'] = $userinfo['name'];      
       $user_obj['personid'] = $profile['personid'];
+      $user_obj['edu_key'] = $user_obj['personid'];
+      $user_obj['uid'] = "openID";
       $user_obj['code'] = $edufile['schoolid'];
+      $user_obj['school'] =$schools_name[$user_obj['code']];
       $user_obj['kind'] = $edufile['titles'][0]['titles'][0];      
       $user_obj['title'] = $edufile['titles'][0]['titles'][1];
+
+
+      session(['Gsuite' => $user_obj]);
+      session(['username'=>$user_obj['username']]);
+      session(['password'=>$user_obj['password']]);
+      session(['pwd'=>$user_obj['password']]);
+      
 
         //學生禁止訪問
         if ($user_obj['success']) {
@@ -127,8 +139,12 @@ class OpenIDController extends Controller
             }           
             
             //session(['Gsuite' => $user_obj]);
-            //session(['username'=>$user_obj['username']]);
-            //session(['password'=>$user_obj['password']]);
+            session(['username'=>$user_obj['username']]);
+            session(['password'=>$user_obj['password']]);
+            session(['pwd'=>$user_obj['password']]);
+            session(['name'=>$user_obj['name']]);
+            session(['code'=>$user_obj['code']]);            
+            session(['school_name'=>$schools_name[$user_obj['code']]]);
             //session(['pwd'=>bcrypt($user_obj['password'])]);
 
             //是否已有此帳號
@@ -144,8 +160,7 @@ class OpenIDController extends Controller
                 $school_data->user->update($att);
                 
                 //更新學校資料
-                $att2['school_code'] = $user_obj['code'];
-                $schools_name = config('app.schools_name');
+                $att2['school_code'] = $user_obj['code'];                
                 $att2['school_name'] = $schools_name[$user_obj['code']];
                 $att2['kind'] = $user_obj['kind'];
                 $att2['title'] = $user_obj['title'];

@@ -35,6 +35,7 @@ class GsuiteController extends Controller
         $att['email'] = $request->input('email');
         $att['line_id'] = $request->input('line_id');
         $att['website'] = $request->input('website');
+        dd($att);
         $user = User::create($att);
 
 
