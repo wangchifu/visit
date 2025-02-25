@@ -141,25 +141,21 @@ class OpenIDController extends Controller
                 $att['password'] = $user_obj['password'];
                 $att['name'] = $user_obj['name'];
                 $school_data->user->update($att);
-
-                /**
+                
                 //更新學校資料
-                $att2['school_code'] = session('Gsuite')['code'];
-                $att2['school_name'] = session('Gsuite')['school'];
-                $att2['kind'] = session('Gsuite')['kind'];
-                $att2['title'] = session('Gsuite')['title'];
-                $att2['edu_key'] = session('Gsuite')['edu_key'];
-                $att2['uid'] = session('Gsuite')['uid'];
-                $att2['user_id'] = $user->id;
-                if(empty($user->school_data)){
-                    SchoolData::create($att2);
-                }else{
-                    $user->school_data->update($att2);
-                }
+                $att2['school_code'] = $user_obj['code'];
+                $schools_name = config('app.schools_name');
+                $att2['school_name'] = $schools_name[$user_obj['code']];
+                $att2['kind'] = $user_obj['kind'];
+                $att2['title'] = $user_obj['title'];
+                $att2['edu_key'] = $user_obj['personid'];
+                $att2['uid'] = "no uid";
+                dd($att2);
+                //$att2['user_id'] = $school_data->user->id;
+                $school_data->update($att2);
                 
                 Auth::login($user);
-                return redirect()->route('index');                                             
-                */
+                return redirect()->route('index');                                                             
             }            
         
         };      
