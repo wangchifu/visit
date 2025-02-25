@@ -47,16 +47,11 @@ class GsuiteController extends Controller
         $att2['edu_key'] = session('Gsuite')['edu_key'];
         $att2['uid'] = session('Gsuite')['uid'];
         $att2['user_id'] = $user->id;
-        dd($att2);
+        
         SchoolData::create($att2);
 
-        if(Auth::attempt([
-            'username' => session('username'),
-            'password' => session('password'),
-            'login_type'=>'gsuite',
-            ])){
-            return redirect()->route('index');
-        }
+        Auth::login($user);
+        return redirect()->route('index');       
     }
 
 
