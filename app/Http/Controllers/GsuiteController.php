@@ -34,8 +34,7 @@ class GsuiteController extends Controller
         $att['telephone_number'] = $request->input('telephone_number');
         $att['email'] = $request->input('email');
         $att['line_id'] = $request->input('line_id');
-        $att['website'] = $request->input('website');
-        dd($att);
+        $att['website'] = $request->input('website');        
         $user = User::create($att);
 
 
@@ -48,6 +47,7 @@ class GsuiteController extends Controller
         $att2['edu_key'] = session('Gsuite')['edu_key'];
         $att2['uid'] = session('Gsuite')['uid'];
         $att2['user_id'] = $user->id;
+        dd($att2);
         SchoolData::create($att2);
 
         if(Auth::attempt([
