@@ -94,18 +94,22 @@ class GsuiteController extends Controller
             session(['password'=>$request->input('password')]);
             session(['pwd'=>bcrypt($request->input('password'))]);
 
+            /**
             $user = User::where('username',$request->input('username'))
                 ->where('login_type','gsuite')
                 ->first();
+            */
+            $school_data = SchoolData::where('edu_key', $obj['edu_key'])                
+                ->first();
 
-            if(empty($user)){
+            if(empty($school_data)){
                 return redirect()->route('gsuite.register');
             }else{
 
                 //更新密碼
                 $att['password'] = session('pwd');
                 $att['name'] = session('Gsuite')['name'];
-                $user->update($att);
+                $school_data->user->update($att);
 
                 //更新學校資料
                 $att2['school_code'] = session('Gsuite')['code'];
@@ -114,12 +118,9 @@ class GsuiteController extends Controller
                 $att2['title'] = session('Gsuite')['title'];
                 $att2['edu_key'] = session('Gsuite')['edu_key'];
                 $att2['uid'] = session('Gsuite')['uid'];
-                $att2['user_id'] = $user->id;
-                if(empty($user->school_data)){
-                    SchoolData::create($att2);
-                }else{
-                    $user->school_data->update($att2);
-                }
+                $att2['user_id'] = $school_data->user->id;
+                
+                $school_data->update($att2);
 
                 if(Auth::attempt(['username' => session('username'), 'password' => session('password')])){
                     return redirect()->route('index');
