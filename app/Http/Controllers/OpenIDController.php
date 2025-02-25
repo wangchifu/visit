@@ -119,7 +119,46 @@ class OpenIDController extends Controller
 
         //學生禁止訪問
         if ($user_obj['success']) {
-            dd($user_obj);
+            if ($user_obj['kind'] == "學生") {
+                abort(403, '僅限國中小教職員登入');
+            }           
+            
+            //session(['Gsuite' => $user_obj]);
+            //session(['username'=>$user_obj['username']]);
+            //session(['password'=>$user_obj['password']]);
+            //session(['pwd'=>bcrypt($user_obj['password'])]);
+
+            //是否已有此帳號
+            $school_data = SchoolData::where('edu_key', $user_obj['personid'])                
+                ->first();
+
+            if (empty($user)) {
+                return redirect()->route('gsuite.register');                      
+            } else {                
+                //更新密碼
+                $att['password'] = $user_obj['password'];
+                $att['name'] = $user_obj['name'];
+                $school_data->user->update($att);
+
+                /**
+                //更新學校資料
+                $att2['school_code'] = session('Gsuite')['code'];
+                $att2['school_name'] = session('Gsuite')['school'];
+                $att2['kind'] = session('Gsuite')['kind'];
+                $att2['title'] = session('Gsuite')['title'];
+                $att2['edu_key'] = session('Gsuite')['edu_key'];
+                $att2['uid'] = session('Gsuite')['uid'];
+                $att2['user_id'] = $user->id;
+                if(empty($user->school_data)){
+                    SchoolData::create($att2);
+                }else{
+                    $user->school_data->update($att2);
+                }
+                
+                Auth::login($user);
+                return redirect()->route('index');                                             
+                */
+            }            
         
         };      
 
