@@ -8,10 +8,10 @@
             <div class="card">                
                 <ul class="nav nav-tabs" style="margin: 10px">
                     <li class="nav-item">
-                      <a class="nav-link active" href="#">彰化 GSuite 登入</a>
+                      <a class="nav-link active" href="#">1.彰化 GSuite 登入</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="{{ route('sso') }}">彰化縣教育雲端登入 (OpenID)
+                      <a class="nav-link" href="{{ route('sso') }}">2.彰化縣教育雲端登入 (OpenID)
                     </a>
                     </li>                    
                 </ul>
