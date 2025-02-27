@@ -123,6 +123,9 @@ class OpenIDController extends Controller
       $user_obj['code'] = $edufile['schoolid'];
       $user_obj['school'] =$schools_name[$user_obj['code']];
       $user_obj['kind'] = $edufile['titles'][0]['titles'][0];      
+      if ($user_obj['kind'] == "學生") {
+        abort(403, '僅限國中小教職員登入');
+      }
       $user_obj['title'] = $edufile['titles'][0]['titles'][1];
 
 
