@@ -1,4 +1,4 @@
-<script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('js/jquery-3.7.1.js') }}"></script>
 <script src="{{ asset('js/bootbox.min.js') }}"></script>
 <!-- icons -->
 <link rel="stylesheet" href="{{ asset('template/css/fontawesome/fontawesome-all.css')}}">
