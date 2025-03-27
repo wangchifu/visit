@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'self'; script-src 'self';">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="zT4I5RGHuU2IyB3D4dEsFST0lOL0xdZefBw40Kyb">
 
