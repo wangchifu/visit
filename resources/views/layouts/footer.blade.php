@@ -109,8 +109,8 @@
         document.getElementById('mapHover').style.display = 'none';
     }
 </script>
-<script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery-3.7.1.js') }}"></script>
+<script src="{{ asset('template/js/bootstrap.min.js') }}"></script>
 
 <script type="text/javascript">
     $(function () {
