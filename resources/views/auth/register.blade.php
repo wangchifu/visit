@@ -102,6 +102,7 @@
 
     $("#username").on('change', function(){
         // var username = $('#username').val();
+        /**
         $.ajax({
             type: "POST",
             url: "{{ route('check_local_user') }}",
@@ -125,6 +126,7 @@
                 }
             }
         });
+        */
     });
 
 </script>
