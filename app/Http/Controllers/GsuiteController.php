@@ -122,9 +122,10 @@ class GsuiteController extends Controller
                 
                 $school_data->update($att2);
 
-                if(Auth::attempt(['username' => session('username'), 'password' => session('password')])){
-                    return redirect()->route('index');
-                }
+                //if(Auth::attempt(['username' => session('username'), 'password' => session('password')])){
+                Auth::login($school_data->user);
+                return redirect()->route('index');
+                //}
 
             }
         };
