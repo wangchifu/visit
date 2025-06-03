@@ -99,7 +99,8 @@ class GsuiteController extends Controller
                 ->where('login_type','gsuite')
                 ->first();
             */
-            $school_data = SchoolData::where('edu_key', $obj['edu_key'])                
+            $school_data = SchoolData::where('edu_key', $obj['edu_key'])       
+                ->where('school_code', session('Gsuite')['code'])          
                 ->first();
 
             if(empty($school_data)){

@@ -151,7 +151,8 @@ class OpenIDController extends Controller
             //session(['pwd'=>bcrypt($user_obj['password'])]);
 
             //是否已有此帳號
-            $school_data = SchoolData::where('edu_key', $user_obj['personid'])                
+            $school_data = SchoolData::where('edu_key', $user_obj['personid'])      
+                ->where('school_code', $user_obj['code'])          
                 ->first();
 
             if (empty($school_data)) {
