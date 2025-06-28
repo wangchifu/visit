@@ -43,10 +43,10 @@ Route::get('search/{visit}/show/{action}/{tab?}', 'SearchController@show')->name
 Route::post('search/find', 'SearchController@find')->name('searches.find');
 
 //學校登入、認證、註冊表單、註冊儲存
-Route::get('gsuite_login', 'GsuiteController@login')->name('gsuite.login');
-Route::post('gsuite_auth', 'GsuiteController@auth')->name('gsuite.auth');
-Route::get('gsuite_register', 'GsuiteController@register')->name('gsuite.register');
-Route::post('gsuite_register/store', 'GsuiteController@register_store')->name('gsuite.register.store');
+//Route::get('gsuite_login', 'GsuiteController@login')->name('gsuite.login');
+//Route::post('gsuite_auth', 'GsuiteController@auth')->name('gsuite.auth');
+//Route::get('gsuite_register', 'GsuiteController@register')->name('gsuite.register');
+//Route::post('gsuite_register/store', 'GsuiteController@register_store')->name('gsuite.register.store');
 
 //申請local帳號時檢查有無重複帳號
 Route::post('check_local_user', 'HomeController@check_local_user')->name('check_local_user');

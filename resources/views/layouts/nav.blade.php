@@ -13,19 +13,21 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav feature-box ms-auto">
                     @guest
+                    <!--
                     <li class="feature-box-kikyo">
                         <a href="https://gsuite.chc.edu.tw" target="_blank" style="text-decoration: none;">
                             <div class="feature-box-icon"><i class="fas fa-school"></i></div>國中小申請帳號
                         </a>
                     </li>
+                    -->
                     <li class="feature-box-pink">
                         <a href="{{ route('register') }}" style="text-decoration: none;">
                             <div class="feature-box-icon"><i class="fas fa-address-card"></i></div>廠商申請帳號
                         </a>
                     </li>
                     <li class="line">｜</li>
-                    <li><a href="{{ route('gsuite.login') }}" class="me-1 btn btn-outline btn-round btn-kikyo"><i class="fas fa-school"></i>
-                            國中小登入</a></li>
+                    <li><a href="{{ route('sso') }}" class="me-1 btn btn-outline btn-round btn-kikyo"><i class="fas fa-school"></i>
+                            國中小 OpenID 登入</a></li>
                     <li><a href="{{ route('login') }}" class="me-1 btn btn-round btn-kikyo"><i class="fas fa-sign-in-alt"></i>
                             本機登入</a></li>
                     @endguest
