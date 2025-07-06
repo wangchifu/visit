@@ -123,7 +123,7 @@ class OpenIDController extends Controller
       $user_obj['code'] = $edufile['schoolid'];
       $user_obj['school'] =$schools_name[$user_obj['code']];
       $user_obj['title'] = $edufile['titles'][0]['titles'][0];
-      $user_obj['kind'] = $edufile['titles'][0]['titles'][1];      
+      $user_obj['kind'] = "";      
       if ($user_obj['title'] == "學生") {
         $message = "僅限國中小教職員登入";
         $url = "https://chc.sso.edu.tw/oidc/v1/logout-to-go";
