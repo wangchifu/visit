@@ -4,6 +4,15 @@
 
 @section('content')
 <div class="content-info">
+    @if($errors->any())
+    <div class="form-group">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li class="text-danger">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <h2>最新公告</h2>
     @auth
     @if(auth()->user()->group_id =="1" or auth()->user()->group_id =="4")

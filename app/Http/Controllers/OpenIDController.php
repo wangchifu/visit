@@ -122,11 +122,19 @@ class OpenIDController extends Controller
       $user_obj['uid'] = "openID";
       $user_obj['code'] = $edufile['schoolid'];
       $user_obj['school'] =$schools_name[$user_obj['code']];
-      $user_obj['kind'] = $edufile['titles'][0]['titles'][1];      
-      if ($user_obj['kind'] == "學生") {
-        abort(403, '僅限國中小教職員登入');
-      }
       $user_obj['title'] = $edufile['titles'][0]['titles'][0];
+      $user_obj['kind'] = $edufile['titles'][0]['titles'][1];      
+      if ($user_obj['title'] == "學生") {
+        $message = "僅限國中小教職員登入";
+        $url = "https://chc.sso.edu.tw/oidc/v1/logout-to-go";
+        $post_logout_redirect_uri = url('/');        
+        $id_token_hint = session('id_token');
+        $link = $url . "?post_logout_redirect_uri=".$post_logout_redirect_uri."&id_token_hint=" . $id_token_hint;
+        return redirect($link)->withErrors(['gsuite_error' => [$message]]);                
+      }else{
+        $user_obj['kind'] = $edufile['titles'][0]['titles'][1]; 
+      }
+      
 
 
       session(['Gsuite' => $user_obj]);
@@ -136,10 +144,7 @@ class OpenIDController extends Controller
       
 
         //學生禁止訪問
-        if ($user_obj['success']) {
-            if ($user_obj['kind'] == "學生") {
-                abort(403, '僅限國中小教職員登入');
-            }           
+        if ($user_obj['success']) {          
             
             //session(['Gsuite' => $user_obj]);
             session(['username'=>$user_obj['username']]);
