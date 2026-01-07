@@ -97,9 +97,9 @@ if(! function_exists('send_mail')){
         );
         $result = curl_exec($ch);
         $obj = json_decode($result,true);
-        if( $obj["success"] == true) {
+        //if( $obj["success"] == true) {
             //echo "<body onload=alert('已mail通知')>";
-        };
+        //};
 
 
     }
