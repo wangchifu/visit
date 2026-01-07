@@ -109,7 +109,7 @@ class VisitsController extends Controller
         $subject = env('APP_NAME')." 有新的行程需被審核！行程編號[{$visit->id}]";
         $body = $subject." 行程名稱：「{$visit->visit_name}」，請上 ".env('APP_URL')." 查看並審核！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
 
     
@@ -252,7 +252,7 @@ class VisitsController extends Controller
             $subject = env('APP_NAME')." 有行程經過修改需被審核！行程編號[{$visit->id}]";
             $body = $subject." 行程名稱「{$visit->visit_name}」，請上 ".env('APP_URL')." 查看並審核！";
 
-            send_mail($to,$subject,$body);
+            //send_mail($to,$subject,$body);
 
 
             $folder = 'visits/'.$visit->id;
@@ -434,7 +434,7 @@ class VisitsController extends Controller
         $subject = $matchmaking->user->school_data->school_name." ".$matchmaking->user->name."報名行程「".$matchmaking->visit->visit_name."」審核通過！媒合[{$matchmaking->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 確認！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
 
         $att2['visits'] = $matchmaking->visit->visits+1;
@@ -447,7 +447,7 @@ class VisitsController extends Controller
         $to = $matchmaking->user->email;
         $subject = $matchmaking->user->school_data->school_name." ".$matchmaking->user->name."報名行程「".$matchmaking->visit->visit_name."」審核失敗，十分可惜！媒合編號[{$matchmaking->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 確認！";
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
 
         $att['situation'] = 3;
@@ -477,7 +477,7 @@ class VisitsController extends Controller
         $subject = $matchmaking->user->school_data->school_name." ".$matchmaking->user->name."報名職探課程「".$matchmaking->visit->visit_name."」遭刪除！媒合編號[{$matchmaking->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 確認！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
         $matchmaking->delete();
         return redirect()->route('visits.matching',$matchmaking->visit_id);
@@ -770,7 +770,7 @@ class VisitsController extends Controller
         $to = $visit->user->email;
         $subject = env('APP_NAME')." 送審行程審核通過！";
         $body = $subject." 請上網站 ".env('APP_URL')." 確認！行程編號[{$visit->id}]";
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
 
         $att['disable'] = null;
@@ -786,7 +786,7 @@ class VisitsController extends Controller
         $to = $visit->user->email;
         $subject = env('APP_NAME')." 送審行程遭退回，請修改後再送！行程編號[{$visit->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 確認！";
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
 
         $att['disable'] = "2";
@@ -803,7 +803,7 @@ class VisitsController extends Controller
         $subject = env('APP_NAME')." 送審行程遭刪除，請重新設計！行程編號[{$visit->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 確認！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
 
         $dir = storage_path('app/public/visits/'.$visit->id);

@@ -129,7 +129,7 @@ class ZtansController extends Controller
         $subject = $matchmaking->user->school_data->school_name." ".$matchmaking->user->name."報名職探課程「".$course->course_name."」，媒合編號[{$matchmaking->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 審核！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
         return redirect()->route('matchmakings.ztans_index');
 

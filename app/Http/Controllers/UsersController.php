@@ -249,7 +249,7 @@ class UsersController extends Controller
         $subject = env('APP_NAME')." 系統通知！使用者編號[{$user->id}]";
         $body = $subject."，你的帳號「{$user->username}」已遭刪除，請想一想哪出錯！，請上 ".env('APP_URL')." 查看！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
       return redirect('users/index?page='.$page); 
     }
@@ -275,7 +275,7 @@ class UsersController extends Controller
         $subject = env('APP_NAME')." ".$result;
         $body = $subject."，你的帳號已通過審核！，請上 ".env('APP_URL')." 查看！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
         return redirect('users/index?page='.$page); 
     }  

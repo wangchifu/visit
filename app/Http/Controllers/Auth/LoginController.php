@@ -155,7 +155,7 @@ class LoginController extends Controller
             $subject = env('APP_NAME') . " 有新的註冊者，使用者編號[{$user->id}]";
             $body = $subject . "，帳號「{$user->username}」，請上 " . env('APP_URL') . " 查看並審核！";
 
-            send_mail($to, $subject, $body);
+            //send_mail($to, $subject, $body);
 
 
             return redirect()->route('index');

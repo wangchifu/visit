@@ -87,7 +87,7 @@ class MatchmakingsController extends Controller
         $subject = env('APP_NAME')." 已經有申請參訪者！行程編號[{$visit->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 審核國中小的申請單！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
 
         return redirect()->route('visits.my_visit');

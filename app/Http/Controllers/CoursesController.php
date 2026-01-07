@@ -395,7 +395,7 @@ class CoursesController extends Controller
         $subject = $matchmaking->user->school_data->school_name." ".$matchmaking->user->name."報名職探課程「".$matchmaking->course->course_name."」審核通過！媒合編號[{$matchmaking->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 確認！";
 
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
 
         $att2['visits'] = $matchmaking->course->visits+1;
@@ -415,7 +415,7 @@ class CoursesController extends Controller
         $to = $matchmaking->user->email;
         $subject = $matchmaking->user->school_data->school_name." ".$matchmaking->user->name."報名職探課程「".$matchmaking->course->course_name."」審核失敗，十分可惜！媒合編號[{$matchmaking->id}]";
         $body = $subject." 請上網站 ".env('APP_URL')." 確認！";
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
         return redirect()->route('courses.matching',$matchmaking->course_id);
     }
@@ -425,7 +425,7 @@ class CoursesController extends Controller
         $to = $matchmaking->user->email;
         $subject = $matchmaking->user->school_data->school_name." ".$matchmaking->user->name."報名職探課程「".$matchmaking->course->course_name."」已遭刪除，非常抱歉！媒合編號[{$matchmaking->id}]";
         $body = $subject." 請上網站 http://visit.chc.edu.tw 確認！";
-        send_mail($to,$subject,$body);
+        //send_mail($to,$subject,$body);
 
         Answer::where('user_id',$matchmaking->user_id)
             ->where('course_id',$matchmaking->course_id)
