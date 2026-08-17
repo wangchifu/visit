@@ -164,9 +164,7 @@
                             -->
                             <a href="{{ route('matchmaking.visit_data',$visit->id) }}" class="btn btn-success" id="create" onclick="return confirm('確定要參訪？')"><i class="fas fa-play"></i> 我要參訪</a>
                     @endif
-                @endif
-            @else
-                <a href="{{ route('gsuite.login') }}" class="btn btn-danger">國中小端請先登入</a>
+                @endif            
             @endif
         </div>
     </div>
